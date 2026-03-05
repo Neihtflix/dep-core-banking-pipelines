@@ -1,0 +1,8 @@
+sources:
+  - name: bronze
+    database: CORE_BANKING_DB
+    schema: BRONZE
+    tables:
+      - name: customers
+      - name: accounts
+      - name: transactions
