@@ -22,7 +22,7 @@ LEFT JOIN {{ ref('dim_accounts') }} a
     AND (t.create_date < a.valid_to OR a.valid_to IS NULL)
 
 {% if is_incremental() %}
-w
+
   WHERE t.create_date > (SELECT MAX(create_date) FROM {{ this }})
 
 {% endif %}
