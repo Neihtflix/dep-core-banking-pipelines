@@ -37,19 +37,19 @@ jobs:
       # ------------------------
       - name: Setup dbt profile
         run: |
-          mkdir -p ~/.dbt
-          cat > ~/.dbt/profiles.yml <<EOL
+          mmkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << 'EOL'
           banking_dbt:
             target: prod
             outputs:
               prod:
                 type: snowflake
-                account: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-                user: ${{ secrets.SNOWFLAKE_USER }}
-                password: ${{ secrets.SNOWFLAKE_PASSWORD }}
+                account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+                user: "{{ env_var('SNOWFLAKE_USER') }}"
+                password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
                 role: ACCOUNTADMIN
                 database: CORE_BANKING_DB
-                warehouse: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+                warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
                 schema: STAGING
           EOL
 
@@ -57,6 +57,11 @@ jobs:
       # Deploy dbt project
       # ------------------------
       - name: dbt run + test (prod)
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
         run: |
           cd banking_dbt
           dbt deps
