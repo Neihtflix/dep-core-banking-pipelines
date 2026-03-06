@@ -37,7 +37,7 @@ jobs:
       # ------------------------
       - name: Setup dbt profile
         run: |
-          mmkdir -p ~/.dbt
+          mkdir -p ~/.dbt
           cat > ~/.dbt/profiles.yml << 'EOL'
           banking_dbt:
             target: prod
