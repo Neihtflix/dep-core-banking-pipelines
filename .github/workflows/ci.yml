@@ -45,6 +45,7 @@ jobs:
           pip install ruff
           ruff check .
 
+        # run unit tests
       - name: Run unit tests
         run: |
           pip install pytest

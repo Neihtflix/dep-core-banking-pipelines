@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ main ]   # deploy only from main
+    branches: [ main ]   # deploy only from main 
 
 jobs:
   deploy:
